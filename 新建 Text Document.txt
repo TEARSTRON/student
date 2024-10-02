@@ -1,0 +1,160 @@
+<template>
+  <div class="main">
+    <div class="part-1">
+      <div class="time"><span>当前时间：</span><span>{{ currentTime }}</span></div>
+      <el-select v-model="selectedOption" placeholder="请选择" class="select-menu">
+        <el-option label="选项1" value="1"></el-option>
+        <el-option label="选项2" value="2"></el-option>
+      </el-select>
+      <line-chart
+        v-if="selectedOption === '1'"
+        title="底流流量"
+        :apiUrls="[
+          { label: '#1 浓密机底流流量（DCS系统设定值）', url: '/prod-api/inst/detail/all' },
+          { label: '#2 浓密机底流流量（DCS系统设定值）', url: '/prod-api/inst/detail/all' },
+          { label: '#1 浓密机底流流量（跟踪值）', url: '/prod-api/inst/detail/all' },
+          { label: '#2 浓密机底流流量（跟踪值）', url: '/prod-api/inst/detail/all' },
+        ]"
+      />
+      <line-chart
+        v-else
+        title="底流流量"
+        :apiUrls="[
+          { label: '#1 浓密机底流流量（DCS系统设定值）', url: '/prod-api/inst/detail/all' },
+          { label: '#2 浓密机底流流量（DCS系统设定值）', url: '/prod-api/inst/detail/all' },
+          { label: '#1 浓密机底流流量（跟踪值）', url: '/prod-api/inst/detail/all' },
+          { label: '#2 浓密机底流流量（跟踪值）', url: '/prod-api/inst/detail/all' },
+        ]"
+      />
+      <!-- 其他图表 -->
+    </div>
+    <div class="part-2">
+      <!-- 其他内容 -->
+    </div>
+  </div>
+</template>
+
+<script>
+import dayjs from 'dayjs';
+import LineChart from '../components/LineChart.vue'
+
+export default {
+  name: 'HomePage',
+  data () {
+    return {
+      currentTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),  // 初始时间
+      selectedOption: '',  // 初始下拉菜单选择
+    }
+  },
+  components: {
+    LineChart,
+  },
+  mounted() {
+    this.updateTime();
+    this.interval = setInterval(this.updateTime, 1000);
+  },
+  beforeDestroy() {
+    clearInterval(this.interval);
+  },
+  methods: {
+    updateTime() {
+      this.currentTime = dayjs().format('YYYY-MM-DD HH:mm:ss');  // 更新当前时间
+    }
+  }
+};
+</script>
+
+<style scoped>
+.main .part-1{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.main .part-1 .time{
+  background-color: #f6f6f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: bold;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.main .part-1 .time span:last-child{
+  display: block;
+  padding: 20px;
+  background: #fff;
+  border: 2px solid #ccc;
+}
+.main .part-2{
+  display: grid;
+  /* 一行三个 */
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.end-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 170px;
+}
+.end-card p{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.end-card p span{
+  width: 200px;
+}
+.end-card .title{
+  margin-bottom: auto;
+  font-weight: bold;
+  text-align: left;
+  width: 100%;
+}
+.select-menu {
+  margin-bottom: 20px;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+          <line-chart title="底流流量"
+                      :apiUrls="[
+          { label: '#1 浓密机底流流量（DCS系统设定值）', url: '/prod-api/inst/detail/all' },
+          { label: '#2 浓密机底流流量（DCS系统设定值）', url: '/prod-api/inst/detail/all' },
+          { label: '#1 浓密机底流流量（跟踪值）', url: '/prod-api/inst/detail/all' },
+          { label: '#2 浓密机底流流量（跟踪值）', url: '/prod-api/inst/detail/all' },
+        ]" />
+          <line-chart title="底流浓度"
+                      :apiUrls="[
+          { label: '#1 浓密机出料浓度（DCS系统设定值）', url: '/prod-api/inst/detail/all' },
+          { label: '#2 浓密机出料浓度（DCS系统设定值）', url: '/prod-api/inst/detail/all' },
+          { label: '#1 浓密机出料浓度（跟踪值）', url: '/prod-api/inst/detail/all' },
+          { label: '#2 浓密机出料浓度（跟踪值）', url: '/prod-api/inst/detail/all' },
+        ]" />
+          <line-chart title="泥层压强"
+                      :apiUrls="[
+          { label: '#1 浓密机泥层压力', url: '/prod-api/inst/detail/all' },
+          { label: '#2 浓密机泥层压力', url: '/prod-api/inst/detail/all' },
+        ]" />
+          <line-chart title="进料流量"
+                      :apiUrls="[
+          { label: '#1 浓密机进料流量', url: '/prod-api/inst/detail/all' },
+          { label: '#2 浓密机进料流量', url: '/prod-api/inst/detail/all' },
+        ]" />
+          <line-chart title="进料浓度"
+                      :apiUrls="[
+          { label: '#1 浓密机进料浓度', url: '/prod-api/inst/detail/all' },
+          { label: '#2 浓密机进料浓度', url: '/prod-api/inst/detail/all' },
+        ]" />
+ 
